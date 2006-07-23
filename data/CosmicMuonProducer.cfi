@@ -1,0 +1,9 @@
+    module CosmicMuon = CosmicMuonProducer{
+       string MuonSeedCollectionLabel = "CosmicMuonSeed"
+       PSet TrajectoryBuilderParameters = {
+           double MaxChi2 = 100.0
+           string Propagator = "SteppingHelixPropagatorAny"
+           }
+
+     }
+
