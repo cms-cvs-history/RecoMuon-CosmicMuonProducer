@@ -3,6 +3,10 @@
        PSet TrajectoryBuilderParameters = {
            double MaxChi2 = 100.0
            string Propagator = "SteppingHelixPropagatorAny"
+	   untracked bool EnableDTMeasurement = true
+	   untracked bool EnableCSCMeasurement = true
+   	   untracked bool EnableRPCMeasurement = false
+
            }
 
      }
