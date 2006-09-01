@@ -1,11 +1,21 @@
+    include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
     module CosmicMuon = CosmicMuonProducer{
-       string MuonSeedCollectionLabel = "CosmicMuonSeed"
+    
+       string TrackLoaderPropagatorName = "SteppingHelixPropagatorAny"
+
+       untracked string MuonSeedCollectionLabel = "CosmicMuonSeed"
+
+       using MuonServiceProxy
+
        PSet TrajectoryBuilderParameters = {
-           double MaxChi2 = 100.0
            string Propagator = "SteppingHelixPropagatorAny"
 	   untracked bool EnableDTMeasurement = true
 	   untracked bool EnableCSCMeasurement = true
    	   untracked bool EnableRPCMeasurement = false
+	   PSet MuonTrajectoryUpdatorParameters = {
+		double MaxChi2 = 1000 #25.0
+		int32 Granularity = 0
+	   }	
 
            }
 
