@@ -13,11 +13,15 @@
 	   untracked bool EnableCSCMeasurement = true
    	   untracked bool EnableRPCMeasurement = false
 	   PSet MuonTrajectoryUpdatorParameters = {
-		double MaxChi2 = 1000 #25.0
+		double MaxChi2 = 3000 #25.0
 		int32 Granularity = 0
 	   }	
-
+           PSet BackwardMuonTrajectoryUpdatorParameters = {
+                double MaxChi2 = 1000 #25.0
+                int32 Granularity = 2
            }
+
+       }
 
      }
 
