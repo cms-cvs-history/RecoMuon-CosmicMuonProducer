@@ -1,5 +1,5 @@
     include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
-    module CosmicMuon = CosmicMuonProducer{
+    module cosmicMuons = CosmicMuonProducer{
     
        string TrackLoaderPropagatorName = "SteppingHelixPropagatorAny"
 
