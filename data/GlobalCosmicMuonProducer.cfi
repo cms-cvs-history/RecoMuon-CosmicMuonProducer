@@ -1,22 +1,24 @@
 module globalCosmicMuons = GlobalCosmicMuonProducer {
-
+    
     InputTag MuonCollectionLabel = cosmicMuons
-
-    string TrackLoaderPropagatorName = "SteppingHelixPropagatorAny"
-    untracked bool PutTrajectoryIntoEvent = false
-
-    PSet ServiceParameters = {
-       untracked vstring Propagators = {
-         "SteppingHelixPropagatorAny",
-         "PropagatorWithMaterial",
-         "PropagatorWithMaterialOpposite"
-       }
+    
+    PSet TrackLoaderParameters = {
+	string TrackLoaderPropagator = "SteppingHelixPropagatorAny"
+	untracked bool PutTrajectoryIntoEvent = false
     }
-
+    
+    PSet ServiceParameters = {
+	untracked vstring Propagators = {
+	    "SteppingHelixPropagatorAny",
+	    "PropagatorWithMaterial",
+	    "PropagatorWithMaterialOpposite"
+	}
+    }
+    
     PSet TrajectoryBuilderParameters = {
         string TkTrackCollectionLabel = "cosmictrackfinder"
         string TrackRecHitBuilder = "WithTrackAngle"
-
+	
         PSet RefitterParameters = {
             string InPropagatorAlongMom = "PropagatorWithMaterial"
             string OutPropagatorAlongMom = "SteppingHelixPropagatorAny"
@@ -25,5 +27,6 @@ module globalCosmicMuons = GlobalCosmicMuonProducer {
         }
     }
 }
+
 
 
