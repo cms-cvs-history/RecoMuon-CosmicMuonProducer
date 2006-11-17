@@ -19,10 +19,14 @@ module cosmicMuons = CosmicMuonProducer{
 	PSet MuonTrajectoryUpdatorParameters = {
 	    double MaxChi2 = 30000 # need to be huge at this step
 	    int32 Granularity = 0 #ONLY 0! otherwise may got wrong RH order
+	    bool RescaleError = false
+	    double RescaleErrorFactor = 1. 
 	}	
 	PSet BackwardMuonTrajectoryUpdatorParameters = {
 	    double MaxChi2 = 100 # smaller at this step
 	    int32 Granularity = 2
+	    bool RescaleError = false
+	    double RescaleErrorFactor = 1. 
 	}
     
     }
