@@ -1,0 +1,19 @@
+<use name=FWCore/Framework>
+<use name=FWCore/Utilities>
+<use name=FWCore/ParameterSet>
+<use name=RecoMuon/TrackingTools>
+<use name=Foundation/PluginManager>
+<use name=DataFormats/TrackReco>
+<use name=DataFormats/MuonReco>
+<use name=DataFormats/Common>
+<use name=SimDataFormats/Track>
+
+<use name=CLHEP>
+<use name=root>
+
+<library file="CosmicMuonValidator.cc" name=CosmicMuonValidator>
+  <use name=FWCore/Framework>
+  <use name=FWCore/ParameterSet>
+  <flags SEAL_PLUGIN_NAME="CosmicMuonValidator">
+</library>
+
