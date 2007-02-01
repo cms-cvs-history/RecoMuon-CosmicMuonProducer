@@ -8,6 +8,7 @@ module cosmicMuons = CosmicMuonProducer{
     PSet TrackLoaderParameters = {
 	string TrackLoaderPropagator = "SteppingHelixPropagatorAny"
 	untracked bool PutTrajectoryIntoEvent = false
+	bool VertexConstraint = false
     }
     
     
