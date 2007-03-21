@@ -20,14 +20,17 @@ module globalCosmicMuons = GlobalCosmicMuonProducer {
         string TrackRecHitBuilder = "WithTrackAngle"
         string Propagator = "SteppingHelixPropagatorAny"
 	
-        PSet RefitterParameters = {
-            string InPropagatorAlongMom = "PropagatorWithMaterial"
-            string OutPropagatorAlongMom = "SteppingHelixPropagatorAny"
-            string InPropagatorOppositeToMom = "PropagatorWithMaterialOpposite"
-            string OutPropagatorOppositeToMom = "SteppingHelixPropagatorAny"
+        PSet MuonSmootherParameters = {
+            string Propagator = "SteppingHelixPropagatorAny"
         }
+
+	PSet TrackTransformer = {
+	    string Fitter = "KFFitterForRefitInsideOut"
+	    string Smoother = "KFSmootherForRefitInsideOut"
+	    string TrackerRecHitBuilder = "WithTrackAngle"
+	    string MuonRecHitBuilder = "MuonRecHitBuilder"
+	    string RefitDirection = "insideOut"
+	}
+
     }
 }
-
-
-
