@@ -2,11 +2,8 @@ module globalCosmicMuons = GlobalCosmicMuonProducer {
     
     InputTag MuonCollectionLabel = cosmicMuons
     
-    PSet TrackLoaderParameters = {
-	string TrackLoaderPropagator = "SteppingHelixPropagatorAny"
-	untracked bool PutTrajectoryIntoEvent = false
-    }
-    
+    using MuonTrackLoaderForCosmic
+        
     PSet ServiceParameters = {
 	untracked vstring Propagators = {
 	    "SteppingHelixPropagatorAny",

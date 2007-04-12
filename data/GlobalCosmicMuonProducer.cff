@@ -30,5 +30,6 @@ include "RecoTracker/TransientTrackingRecHit/data/TransientTrackingRecHitBuilder
 
 include "RecoMuon/DetLayers/data/muonDetLayerGeometry.cfi"
 include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
+include "RecoMuon/TrackingTools/data/MuonTrackLoader.cff"
 
 include "RecoMuon/CosmicMuonProducer/data/GlobalCosmicMuonProducer.cfi"
