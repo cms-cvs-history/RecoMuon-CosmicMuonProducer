@@ -1,0 +1,33 @@
+module globalCosmicMuons = GlobalCosmicMuonProducer {
+    
+    InputTag MuonCollectionLabel = cosmicMuons
+    
+    using MuonTrackLoaderForCosmic
+        
+    PSet ServiceParameters = {
+	untracked vstring Propagators = {
+	    "SteppingHelixPropagatorAny",
+	    "PropagatorWithMaterial",
+	    "PropagatorWithMaterialOpposite"
+	}
+    }
+    
+    PSet TrajectoryBuilderParameters = {
+        string TkTrackCollectionLabel = "cosmictrackfinder"
+        string TrackRecHitBuilder = "WithTrackAngle"
+        string Propagator = "SteppingHelixPropagatorAny"
+	
+        PSet SmootherParameters = {
+            string Propagator = "SteppingHelixPropagatorAny"
+        }
+
+	PSet TransformerParameters = {
+	    string Fitter = "KFFitterForRefitInsideOut"
+	    string Smoother = "KFSmootherForRefitInsideOut"
+	    string TrackerRecHitBuilder = "WithTrackAngle"
+	    string MuonRecHitBuilder = "MuonRecHitBuilder"
+	    string RefitDirection = "insideOut"
+	}
+
+    }
+}
