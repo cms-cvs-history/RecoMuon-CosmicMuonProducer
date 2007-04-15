@@ -17,11 +17,11 @@ module globalCosmicMuons = GlobalCosmicMuonProducer {
         string TrackRecHitBuilder = "WithTrackAngle"
         string Propagator = "SteppingHelixPropagatorAny"
 	
-        PSet MuonSmootherParameters = {
+        PSet SmootherParameters = {
             string Propagator = "SteppingHelixPropagatorAny"
         }
 
-	PSet TrackTransformer = {
+	PSet TransformerParameters = {
 	    string Fitter = "KFFitterForRefitInsideOut"
 	    string Smoother = "KFSmootherForRefitInsideOut"
 	    string TrackerRecHitBuilder = "WithTrackAngle"
