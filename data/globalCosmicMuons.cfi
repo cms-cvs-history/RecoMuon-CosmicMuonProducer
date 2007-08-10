@@ -24,9 +24,11 @@ module globalCosmicMuons = GlobalCosmicMuonProducer {
 	PSet TransformerParameters = {
 	    string Fitter = "KFFitterForRefitInsideOut"
 	    string Smoother = "KFSmootherForRefitInsideOut"
+	    string Propagator = "SmartPropagatorAny"
 	    string TrackerRecHitBuilder = "WithTrackAngle"
 	    string MuonRecHitBuilder = "MuonRecHitBuilder"
 	    string RefitDirection = "insideOut"
+	    bool RefitRPCHits = true
 	}
 
     }
