@@ -6,11 +6,11 @@ module cosmicMuons = CosmicMuonProducer{
     untracked string MuonSeedCollectionLabel = "CosmicMuonSeed"
     
     using MuonServiceProxy
-       
     using MuonTrackLoaderForCosmic
-    
+
     PSet TrajectoryBuilderParameters = {
 	string Propagator = "SteppingHelixPropagatorAny"
+        untracked bool BuildTraversingMuon = false
 	untracked bool EnableDTMeasurement = true
 	untracked bool EnableCSCMeasurement = true
 	untracked bool EnableRPCMeasurement = false
