@@ -1,35 +1,22 @@
+include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
+include "RecoMuon/TrackingTools/data/MuonTrackLoader.cff"
+
 module globalCosmicMuons = GlobalCosmicMuonProducer {
     
     InputTag MuonCollectionLabel = cosmicMuons
     
+    using MuonServiceProxy
     using MuonTrackLoaderForCosmic
         
-    PSet ServiceParameters = {
-	untracked vstring Propagators = {
-	    "SteppingHelixPropagatorAny",
-	    "PropagatorWithMaterial",
-	    "PropagatorWithMaterialOpposite"
-	}
-    }
-    
     PSet TrajectoryBuilderParameters = {
         string TkTrackCollectionLabel = "cosmictrackfinder"
-        string TrackRecHitBuilder = "WithTrackAngle"
+	string TrackerRecHitBuilder = "WithTrackAngle"
+	string MuonRecHitBuilder = "MuonRecHitBuilder"
         string Propagator = "SteppingHelixPropagatorAny"
 	
         PSet SmootherParameters = {
-            string Propagator = "SteppingHelixPropagatorAny"
+            string PropagatorAlong = "SteppingHelixPropagatorAlong"
+            string PropagatorOpposite = "SteppingHelixPropagatorOpposite"
         }
-
-	PSet TransformerParameters = {
-	    string Fitter = "KFFitterForRefitInsideOut"
-	    string Smoother = "KFSmootherForRefitInsideOut"
-	    string Propagator = "SmartPropagatorAny"
-	    string TrackerRecHitBuilder = "WithTrackAngle"
-	    string MuonRecHitBuilder = "MuonRecHitBuilder"
-	    string RefitDirection = "insideOut"
-	    bool RefitRPCHits = true
-	}
-
     }
 }

@@ -27,7 +27,8 @@ module cosmicMuons = CosmicMuonProducer{
 	    double RescaleErrorFactor = 1. 
 	}
         PSet MuonSmootherParameters = {
-            string Propagator = "SteppingHelixPropagatorAny"
+            string PropagatorAlong = "SteppingHelixPropagatorAlong"
+            string PropagatorOpposite = "SteppingHelixPropagatorOpposite"
         }
     
     }
