@@ -14,6 +14,10 @@ module cosmicMuons = CosmicMuonProducer{
 	untracked bool EnableDTMeasurement = true
 	untracked bool EnableCSCMeasurement = true
 	untracked bool EnableRPCMeasurement = false
+	InputTag DTRecSegmentLabel = dt4DSegments
+	InputTag CSCRecSegmentLabel = cscSegments
+	InputTag RPCRecSegmentLabel = rpcRecHits
+	
 	PSet MuonTrajectoryUpdatorParameters = {
 	    double MaxChi2 = 30000 # need to be huge at this step
 	    int32 Granularity = 0 #ONLY 0! otherwise may got wrong RH order
