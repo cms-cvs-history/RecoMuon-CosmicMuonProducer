@@ -1,0 +1,17 @@
+include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
+include "RecoMuon/TrackingTools/data/MuonTrackLoader.cff"
+
+
+# Magnetic Field
+include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
+
+# Geometries
+include "Geometry/CMSCommonData/data/cmsIdealGeometryXML.cff" 
+include "Geometry/CommonDetUnit/data/bareGlobalTrackingGeometry.cfi"
+include "Geometry/DTGeometry/data/dtGeometry.cfi"
+include "Geometry/CSCGeometry/data/cscGeometry.cfi"
+include "Geometry/RPCGeometry/data/rpcGeometry.cfi"
+include "RecoMuon/DetLayers/data/muonDetLayerGeometry.cfi"
+
+
+include "RecoMuon/CosmicMuonProducer/data/cosmicMuons.cfi"
