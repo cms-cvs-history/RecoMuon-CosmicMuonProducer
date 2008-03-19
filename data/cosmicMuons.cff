@@ -1,7 +1,3 @@
-include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
-include "RecoMuon/TrackingTools/data/MuonTrackLoader.cff"
-
-
 # Magnetic Field
 include "MagneticField/Engine/data/volumeBasedMagneticField.cfi"
 
