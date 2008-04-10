@@ -2,8 +2,8 @@
 #define CosmicMuonTrajectoryBuilder_H
 /** \file CosmicMuonTrajectoryBuilder
  *
- *  $Date: 2007/03/08 20:14:10 $
- *  $Revision: 1.12 $
+ *  $Date: 2007/12/16 06:44:43 $
+ *  $Revision: 1.14 $
  *  \author Chang Liu  -  Purdue University
  */
 
@@ -80,6 +80,8 @@ private:
 
   /// reverse a trajectory without refit
   void reverseTrajectory(Trajectory&) const;
+
+  void reverseTrajectoryDirection(Trajectory&) const;
 
   double computeNDOF(const Trajectory&) const;
 
