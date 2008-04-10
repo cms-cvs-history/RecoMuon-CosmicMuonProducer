@@ -10,7 +10,7 @@ module cosmicMuons = CosmicMuonProducer{
 
     PSet TrajectoryBuilderParameters = {
 	string Propagator = "SteppingHelixPropagatorAny"
-        untracked bool BuildTraversingMuon = true
+        untracked bool BuildTraversingMuon = false
 	untracked bool EnableDTMeasurement = true
 	untracked bool EnableCSCMeasurement = true
 	untracked bool EnableRPCMeasurement = false
