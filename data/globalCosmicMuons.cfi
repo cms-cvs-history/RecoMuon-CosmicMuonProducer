@@ -12,8 +12,8 @@ module globalCosmicMuons = GlobalCosmicMuonProducer {
         string Propagator = "SteppingHelixPropagatorAny"
 	
         PSet SmootherParameters = {
-            string PropagatorAlong = "SteppingHelixPropagatorAlong"
-            string PropagatorOpposite = "SteppingHelixPropagatorOpposite"
+            string PropagatorAlong = "SmartPropagatorAny"
+            string PropagatorOpposite = "SmartPropagatorAnyOpposite"
         }
     }
 }
