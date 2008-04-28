@@ -12,7 +12,10 @@
 <use name=CLHEP>
 <use name=root>
 
-<library file="CosmicMuonValidator.cc" name=CosmicMuonValidator>
+<library file=CosmicMuonValidator.cc name=CosmicMuonValidator>
   <flags EDM_PLUGIN=1>
 </library>
 
+<library file=RealCosmicDataAnalyzer.cc name=RealCosmicDataAnalyzer>
+  <flags EDM_PLUGIN=1>
+</library>
