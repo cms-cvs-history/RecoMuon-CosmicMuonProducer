@@ -7,8 +7,8 @@
  *      within cylinders
  *
  *
- *  $Date: 2007/12/16 13:57:09 $
- *  $Revision: 1.10 $
+ *  $Date: 2008/05/14 17:46:50 $
+ *  $Revision: 1.11.2.1 $
  *  \author Chang Liu  -  Purdue University
  */
 
@@ -154,7 +154,7 @@ vector<Trajectory> CosmicMuonSmoother::fit(const TrajectorySeed& seed,
   for ( ConstRecHitContainer::const_iterator ihit = hits.begin() + 1; 
         ihit != hits.end(); ++ihit ) {
 
-    if ((**ihit).isValid() == false && (**ihit).det() == 0) {
+    if (!(**ihit).isValid()) {
       LogTrace(category_)<< "Error: invalid hit.";
       continue;
     }
