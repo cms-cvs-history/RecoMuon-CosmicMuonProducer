@@ -34,7 +34,10 @@ module cosmicMuons = CosmicMuonProducer{
             string PropagatorAlong = "SteppingHelixPropagatorAlong"
             string PropagatorOpposite = "SteppingHelixPropagatorOpposite"
         }
-    
+        PSet MuonNavigationParameters = {
+            bool Endcap = true
+            bool Barrel = true
+        }
     }
 
 }
