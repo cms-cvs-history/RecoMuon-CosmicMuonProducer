@@ -1,3 +1,6 @@
+include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
+include "RecoMuon/TrackingTools/data/MuonTrackLoader.cff"
+
 module globalCosmicMuons = GlobalCosmicMuonProducer {
     
     InputTag MuonCollectionLabel = cosmicMuons

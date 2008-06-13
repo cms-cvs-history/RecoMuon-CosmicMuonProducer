@@ -1,6 +1,3 @@
-include "RecoMuon/TrackingTools/data/MuonServiceProxy.cff"
-include "RecoMuon/TrackingTools/data/MuonTrackLoader.cff"
-
 include "RecoMuon/TransientTrackingRecHit/data/MuonTransientTrackingRecHitBuilder.cfi"
 include "RecoTracker/TransientTrackingRecHit/data/TransientTrackingRecHitBuilder.cfi"
 
