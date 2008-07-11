@@ -10,7 +10,7 @@
 <use name=PhysicsTools/UtilAlgos>
 <use name=FWCore/ServiceRegistry>
 <use name=CLHEP>
-<use name=root>
+<use name=rootgraphics>
 
 <library file=CosmicMuonValidator.cc name=CosmicMuonValidator>
   <flags EDM_PLUGIN=1>
