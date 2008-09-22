@@ -4,8 +4,8 @@
  *  class to build trajectories of cosmic muons and beam-halo muons
  *
  *
- *  $Date: 2008/05/20 16:50:29 $
- *  $Revision: 1.35 $
+ *  $Date: 2008/06/17 18:11:07 $
+ *  $Revision: 1.36 $
  *  \author Chang Liu  - Purdue Univeristy
  */
 
@@ -216,7 +216,7 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
   RPCChamberUsedBack = 0;
   TotalChamberUsedBack = 0;
 
-  Trajectory* myTraj = new Trajectory(seed, oppositeToMomentum);
+  Trajectory myTraj(seed, oppositeToMomentum);
 
   // set starting navigation direction for MuonTrajectoryUpdator
 
@@ -284,7 +284,7 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
 //       else LogTrace("CosmicMuonTrajectoryBuilder")<<"Fit direction outsideIn";
 
          pair<bool,TrajectoryStateOnSurface> bkresult
-              = backwardUpdator()->update((&*theMeas), *myTraj, propagator());
+              = backwardUpdator()->update((&*theMeas), myTraj, propagator());
 
          if (bkresult.first ) {
 
@@ -294,7 +294,7 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
               MuonRecHitContainer tmpUnusedHits = unusedHits(*rnxtlayer,*theMeas);
               allUnusedHits.insert(allUnusedHits.end(),tmpUnusedHits.begin(),tmpUnusedHits.end());
             }
-            if ( (!myTraj->empty()) && bkresult.second.isValid() ) 
+            if ( (!myTraj.empty()) && bkresult.second.isValid() ) 
                lastTsos = bkresult.second;
             else if ((theMeas)->predictedState().isValid()) 
                lastTsos = (theMeas)->predictedState();
@@ -302,8 +302,8 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
        }
   }
 
-  TransientTrackingRecHit::ConstRecHitContainer hits = myTraj->recHits();
-  unsigned int nhits = hits.size(); //for debug, remove me later...
+//  TransientTrackingRecHit::ConstRecHitContainer hits = myTraj.recHits();
+//  unsigned int nhits = hits.size(); //for debug, remove me later...
 
 //  LogTrace(metname) << "Used RecHits before building second half: "<<hits.size();
 //  print(hits);
@@ -312,8 +312,8 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
   LogTrace(metname)<<"all unused RecHits: "<<allUnusedHits.size();
 
   if ( theTraversingMuonFlag && ( allUnusedHits.size() >= 2 ) && 
-     ( ( myTraj->lastLayer()->location() == GeomDetEnumerators::barrel ) ||
-       ( myTraj->firstMeasurement().layer()->location() == GeomDetEnumerators::barrel ) ) ) {
+     ( ( myTraj.lastLayer()->location() == GeomDetEnumerators::barrel ) ||
+       ( myTraj.firstMeasurement().layer()->location() == GeomDetEnumerators::barrel ) ) ) {
       theNTraversing++;
 
       LogTrace(metname)<<utilities()->print(allUnusedHits);
@@ -325,26 +325,26 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
 
       LogTrace(metname)<<"Building trajectory in second hemisphere...";
 
-      buildSecondHalf(*myTraj);
+      buildSecondHalf(myTraj);
 
-      hits = myTraj->recHits();
-      LogTrace(metname) << "After explore: Used RecHits: "<<hits.size();
-      LogTrace(metname)<<utilities()->print(hits);
-      LogTrace(metname) << "== End of Used RecHits == ";
+//      hits = myTraj.recHits();
+//      LogTrace(metname) << "After explore: Used RecHits: "<<hits.size();
+//      LogTrace(metname)<<utilities()->print(hits);
+//      LogTrace(metname) << "== End of Used RecHits == ";
 
-      if ( hits.size() > nhits + 2 ) theNSuccess++;
-      else LogTrace(metname) << "building on second hemisphere failed. ";
+//      if ( hits.size() > nhits + 2 ) theNSuccess++;
+//      else LogTrace(metname) << "building on second hemisphere failed. ";
   }
 
-  if (myTraj->isValid() && (!selfDuplicate(*myTraj)) && TotalChamberUsedBack >= 2 && (DTChamberUsedBack+CSCChamberUsedBack) > 0){
+  if (myTraj.isValid() && (!selfDuplicate(myTraj)) && TotalChamberUsedBack >= 2 && (DTChamberUsedBack+CSCChamberUsedBack) > 0){
      LogTrace(metname) <<" traj ok ";
 
-     if (beamhaloFlag) estimateDirection(*myTraj);
+     if (beamhaloFlag) estimateDirection(myTraj);
 
      for ( vector<Trajectory*>::iterator t = trajL.begin(); t != trajL.end(); ++t ) delete *t;
      trajL.clear();
 
-//     vector<Trajectory> smoothed = theSmoother->trajectories(*myTraj);
+//     vector<Trajectory> smoothed = theSmoother->trajectories(myTraj);
 //     if ( !smoothed.empty() )  {
 //       LogTrace(metname) <<" Smoothed successfully.";
 
@@ -354,24 +354,25 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
 //     }
 //     else {
 //       LogTrace(metname) <<" Smoothing failed.";
-       LogTrace(metname) <<"first "<< myTraj->firstMeasurement().updatedState()
-                        <<"\n last "<<myTraj->lastMeasurement().updatedState();
-       if ( myTraj->direction() == alongMomentum ) LogTrace(metname)<<"along";
-       else if (myTraj->direction() == oppositeToMomentum ) LogTrace(metname)<<"opposite";
+       LogTrace(metname) <<"first "<< myTraj.firstMeasurement().updatedState()
+                        <<"\n last "<<myTraj.lastMeasurement().updatedState();
+       if ( myTraj.direction() == alongMomentum ) LogTrace(metname)<<"along";
+       else if (myTraj.direction() == oppositeToMomentum ) LogTrace(metname)<<"opposite";
        else LogTrace(metname)<<"anyDirection";
 
-       if ( ( myTraj->direction() == alongMomentum && 
-              (myTraj->firstMeasurement().updatedState().globalPosition().y() 
-              < myTraj->lastMeasurement().updatedState().globalPosition().y()))
-           || (myTraj->direction() == oppositeToMomentum && 
-              (myTraj->firstMeasurement().updatedState().globalPosition().y() 
-              > myTraj->lastMeasurement().updatedState().globalPosition().y())) ) {
+       if ( ( myTraj.direction() == alongMomentum && 
+              (myTraj.firstMeasurement().updatedState().globalPosition().y() 
+              < myTraj.lastMeasurement().updatedState().globalPosition().y()))
+           || (myTraj.direction() == oppositeToMomentum && 
+              (myTraj.firstMeasurement().updatedState().globalPosition().y() 
+              > myTraj.lastMeasurement().updatedState().globalPosition().y())) ) {
            LogTrace(metname)<<"reverse trajectory direction";
-           reverseTrajectoryDirection(*myTraj); 
+           reverseTrajectoryDirection(myTraj); 
        }
-       trajL.push_back(myTraj);
+       trajL.push_back(new Trajectory(myTraj));
 //     }
   }
+
   LogTrace(metname) <<" trajL ok "<<trajL.size();
   navLayers.clear();
   return trajL;
