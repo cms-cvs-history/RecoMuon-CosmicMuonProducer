@@ -4,8 +4,8 @@
  *  class to build trajectories of cosmic muons and beam-halo muons
  *
  *
- *  $Date: 2008/12/31 02:34:02 $
- *  $Revision: 1.43 $
+ *  $Date: 2009/01/25 17:18:49 $
+ *  $Revision: 1.43.2.2 $
  *  \author Chang Liu  - Purdue Univeristy
  */
 
@@ -236,12 +236,17 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
       }
   } 
   measL.clear();
-
-  if (!theTraj->isValid() || TotalChamberUsedBack < 2 || (DTChamberUsedBack+CSCChamberUsedBack) == 0 || !lastTsos.isValid()) {
-    return trajL;
+  while (!theTraj->empty()) {
+    theTraj->pop();
   }
 
+
+  if (!theTraj->isValid() || TotalChamberUsedBack < 2 || (DTChamberUsedBack+CSCChamberUsedBack) == 0 || !lastTsos.isValid()) {
+    delete theTraj;
+    return trajL;
+  }
   delete theTraj;
+
 
 //    LogTrace(category_)<<"checkDirectionByT0 "<<checkDirectionByT0(firstDTseg, lastDTseg)<<" nDTseg "<<nDTseg;
 
@@ -328,6 +333,10 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
        }
   }
 
+  for ( vector<Trajectory*>::iterator t = trajL.begin(); t != trajL.end(); ++t ) delete *t;
+
+  trajL.clear();
+
   if (( !myTraj.isValid() ) || ( myTraj.empty() ) || ( (selfDuplicate(myTraj)) )|| TotalChamberUsedBack < 2 || (DTChamberUsedBack+CSCChamberUsedBack) < 1) {
       return trajL;
   }
@@ -335,12 +344,13 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
   if ( theTraversingMuonFlag && ( allUnusedHits.size() >= 2 ) && 
      ( ( myTraj.lastLayer()->location() == GeomDetEnumerators::barrel ) ||
        ( myTraj.firstMeasurement().layer()->location() == GeomDetEnumerators::barrel ) ) ) {
+      theNTraversing++;
 //      LogTrace(category_)<<utilities()->print(allUnusedHits);
       LogTrace(category_)<<"Building trajectory in second hemisphere...";
       buildSecondHalf(myTraj);
   }
 
-  LogTrace(category_) <<" traj ok "<<myTraj.foundHits();
+  LogTrace(category_) <<" traj ok ";
 
 //     getDirectionByTime(myTraj);
   if (beamhaloFlag) estimateDirection(myTraj);
@@ -355,7 +365,7 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
   if (!beamhaloFlag) {
       if ( myTraj.lastMeasurement().updatedState().globalMomentum().y() > 0 ) {
           LogTrace(category_)<<"flip trajectory ";
-          flipTrajectory(myTraj); 
+          flipTrajectory(myTraj);
       }
 
       if ( ( myTraj.direction() == alongMomentum && 
@@ -392,6 +402,7 @@ CosmicMuonTrajectoryBuilder::trajectories(const TrajectorySeed& seed){
       reverseTrajectoryPropagationDirection(myTraj);
   }
   if ( myTraj.empty() ) return trajL;
+
   trajL.push_back(new Trajectory(myTraj));
   navLayers.clear();
   return trajL;
@@ -617,16 +628,14 @@ void CosmicMuonTrajectoryBuilder::flipTrajectory(Trajectory& traj) const {
     }  
     TransientTrackingRecHit::ConstRecHitContainer hits = traj.recHits();
     std::reverse(hits.begin(), hits.end());
-//    LogTrace(category_)<< "hits for flipping ";
-//    LogTrace(category_)<<utilities()->print(hits);
 
     LogTrace(category_)<< "last tsos before flipping "<<lastTSOS;
     utilities()->reverseDirection(lastTSOS,&*theService->magneticField());
     LogTrace(category_)<< "last tsos after flipping "<<lastTSOS;
-
+ 
     vector<Trajectory> refittedback = theSmoother->fit(traj.seed(),hits,lastTSOS);
     if ( refittedback.empty() || refittedback.front().foundHits() < traj.foundHits() ) {
-       return;
+      return;
     }
   LogTrace(category_) <<"flipTrajectory: first "<< refittedback.front().firstMeasurement().updatedState()
                       <<"\nflipTrajectory: last "<<refittedback.front().lastMeasurement().updatedState();
